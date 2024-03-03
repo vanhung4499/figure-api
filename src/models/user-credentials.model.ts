@@ -1,0 +1,40 @@
+import {Entity, model, property} from '@loopback/repository';
+
+@model()
+export class UserCredentials extends Entity {
+  @property({
+    type: 'string',
+    id: true,
+    mongodb: {dataType: 'ObjectID'},
+  })
+  id: string;
+
+  @property({
+    type: 'string',
+    required: true,
+    jsonSchema: {
+      minLength: 8, // At least 8 characters
+      pattern:
+        '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$', // At least one uppercase, one lowercase, one number, and one special character
+    },
+  })
+  password: string;
+
+  @property({
+    type: 'string',
+    required: true,
+    mongodb: {dataType: 'ObjectID'},
+  })
+  userId: string;
+
+  constructor(data?: Partial<UserCredentials>) {
+    super(data);
+  }
+}
+
+export interface UserCredentialsRelations {
+  // describe navigational properties here
+}
+
+export type UserCredentialsWithRelations = UserCredentials &
+  UserCredentialsRelations;
