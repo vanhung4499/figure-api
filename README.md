@@ -1,9 +1,12 @@
 # figure-api
 
-This application is generated using [LoopBack 4 CLI](https://loopback.io/doc/en/lb4/Command-line-interface.html) with the
-[initial project layout](https://loopback.io/doc/en/lb4/Loopback-application-layout.html).
+## Description
 
-## Install dependencies
+This is a simple API for a figure database. It is built with LoopBack 4, MongoDB and TypeScript.
+
+## Build and run the application
+
+### Install dependencies
 
 By default, dependencies were installed when this application was generated.
 Whenever dependencies in `package.json` are changed, run the following command:
@@ -12,7 +15,22 @@ Whenever dependencies in `package.json` are changed, run the following command:
 yarn install
 ```
 
-## Run the application
+### Set up MongoDB
+
+You need to have a running MongoDB instance. You can use a local instance or a remote one. The connection string is defined in `src/datasources/mongodb.datasource.ts`.
+For a local instance, you can run a MongoDB instance in a Docker container:
+
+```sh
+docker run -d -p 27017:27017 --name figure-db mongo
+```
+
+I have already written docker-compose file for this. You can run the following command to start the MongoDB instance:
+
+```sh
+docker-compose up -d figure-db
+```
+
+### Run the application
 
 ```sh
 yarn start
@@ -22,7 +40,7 @@ You can also run `node .` to skip the build step.
 
 Open http://127.0.0.1:3000 in your browser.
 
-## Rebuild the project
+### Rebuild the project
 
 To incrementally build the project:
 
@@ -36,7 +54,7 @@ To force a full build by cleaning up cached artifacts:
 yarn run rebuild
 ```
 
-## Fix code style and formatting issues
+### Fix code style and formatting issues
 
 ```sh
 yarn run lint
@@ -48,7 +66,7 @@ To automatically fix such issues:
 yarn run lint:fix
 ```
 
-## Other useful commands
+### Other useful commands
 
 - `yarn run migrate`: Migrate database schemas for models
 - `yarn run openapi-spec`: Generate OpenAPI spec into a file
@@ -61,9 +79,27 @@ yarn run lint:fix
 yarn test
 ```
 
-## What's next
+## API documentation
 
-Please check out [LoopBack 4 documentation](https://loopback.io/doc/en/lb4/) to
-understand how you can continue to add features to this application.
+The API documentation is available at http://localhost:3000/explorer, inspired by the OpenAPI spec.
 
-[![LoopBack](https://github.com/loopbackio/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png)](http://loopback.io/)
+## ERD
+
+![ERD](./docs/erd.png)
+
+Image gererated by [plantuml](https://plantuml.com/)
+
+
+This is the ERD for the figure database:
+- It contains three models: `Figure` and `User` and `UserCredentials`.
+- A `Figure` belongs to a `User`
+- A `User` has many `Figure`s.
+- A `User` has one `UserCredentials`.
+
+## Infrastructure
+
+Todo: Add terraform files to create the infrastructure in AWS.
+
+## License
+
+MIT
